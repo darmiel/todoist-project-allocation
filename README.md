@@ -1,3 +1,5 @@
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
 # todoist-project-allocation <img src="./assets/todoist-logo.png" align="right" width=200 height=200>
 Little Todoist Bot written in Python.
 
