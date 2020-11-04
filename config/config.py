@@ -17,10 +17,14 @@ USERS: dict = {
     }
 }
 
-DEBUG_MODE: bool = False
-
 """
 Unfortunately I did not find a page with the exact flood restrictions. 
 I just hope that every 30 seconds is not too much. 😅
 """
 DELAY: int = 30 # seconds
+
+"""
+Automatically close tasks
+when sub tasks finished
+"""
+AUTO_CLOSE: bool = True

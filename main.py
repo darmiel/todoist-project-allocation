@@ -7,7 +7,7 @@ from todoist.managers.archive import ItemsArchiveManager
 """
 Example config: ./config.py.dist
 """
-from config.config import API_KEY, PROJECT_ID, USERS, DEBUG_MODE, DELAY
+from config.config import API_KEY, PROJECT_ID, USERS, DELAY, AUTO_CLOSE
 
 """
 This regex is used to remove emojis from a string
@@ -41,6 +41,9 @@ def fetch_items(project_id: str) -> dict:
     items: dict = {}
 
     for item in api.items.all():
+        if item['checked']:
+            continue
+
         item_id: int = item["id"]
         item_id_str: str = str(item_id)
 
@@ -84,41 +87,37 @@ def check():
     print("👷‍♂️ Fetching items ...")
     items: dict = fetch_items(PROJECT_ID)
 
-    if DEBUG_MODE:
-        print (f"👾 Items = ")
-        print(items)
-
     print("✅ Done! Tasks found:")
 
     # Print tasks
     for _id in items:
         item = items[_id]
 
-        names: list = []
+        names: dict = {}
 
         print("📂 " + item['item']['content'])
         for child in item['childs']:
             cntnt: str = child['content']
+            checked: bool = child['checked']
 
             # strip any emojis
             cntnt = emoji_pattern.sub(r'', cntnt)
             cntnt = cntnt.lower().strip()
 
-            names.append(cntnt)
+            names[cntnt] = checked
 
-            print (f"    👾 Cntnt = {cntnt}")
-
+        all_checked: bool = True
         for user in USERS:
             uid: int = USERS[user]['uid']
             name: str = USERS[user]['name']
             ignored_sections: list = USERS[user]['ignored_sections']
 
             if item['item']['section_id'] in ignored_sections:
-                if DEBUG_MODE:
-                    print (f"  👾 Skipped for {user} [{name}]")
                 continue
 
             if not user.lower() in names:
+                all_checked = False
+
                 print(f"  👉 {user} [{name}] missing. Adding to task.")
 
                 # Add as sub-task to main task
@@ -129,6 +128,15 @@ def check():
 
                 # Commit changes
                 changes += 1
+            else:
+                if not names[user.lower()]:
+                    all_checked = False
+
+        if AUTO_CLOSE and all_checked:
+            changes += 1
+
+            print (f"🔒 Auto Closing #{item['item']['id']} '{item['item']['content']}' ...")
+            api.items.complete(item['item']['id'])
 
     if changes > 0:
         print(f"👷‍♂️ {changes} changes - commiting to Todoist ...")
