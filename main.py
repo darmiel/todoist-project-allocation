@@ -7,7 +7,7 @@ from todoist.managers.archive import ItemsArchiveManager
 """
 Example config: ./config.py.dist
 """
-from config import API_KEY, PROJECT_ID, USERS, DEBUG_MODE, DELAY
+from config.config import API_KEY, PROJECT_ID, USERS, DEBUG_MODE, DELAY
 
 """
 This regex is used to remove emojis from a string
