@@ -7,17 +7,17 @@ I wanted a feature that would allow me to give a task to multiple users in a sha
 The bot automatically adds each user as a sub-task to each task every 30 seconds, which are assigned to the user. These sub-tasks can now be processed individually by the user.
 If all users have checked the task, it can be checked completely
 
-## Docker <img src="./assets/docker-logo.png" align=left height=100 width=100>
-Build:
+## Docker
+**Build:**<img src="./assets/docker-logo.png" align="left" height=100 width=120>
 ```bash
-$ docker build . -t todoist-project-allocation:latest
+$ docker build . -t darmiel/todoist-project-allocation:latest
 ```
 
-Run:
+**Run:**
 ```bash
-$ docker run -it --rm todoist-project-allocation:latest
+$ docker run -it --rm darmiel/todoist-project-allocation:latest
 ```
-(or if you need to specify another config file)
+*(or if you need to specify another config file)*
 ```bash
 $ docker run -it --rm -v ${PWD}/config:/usr/app/src/config todoist-project-allocation:latest
 ```
