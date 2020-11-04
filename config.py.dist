@@ -1,0 +1,21 @@
+API_KEY: str = "< api key >"
+PROJECT_ID: int = < project id >
+
+USERS: dict = {
+    "max": {
+        "uid": 123456789,
+        "name": "Max",
+        "ignored_sections": [
+            4201337, # Section 1
+            1337420  # Section 2
+        ]
+    }
+}
+
+DEBUG_MODE: bool = False
+
+"""
+Unfortunately I did not find a page with the exact flood restrictions. 
+I just hope that every 30 seconds is not too much. 😅
+"""
+DELAY: int = 30 # seconds
