@@ -28,7 +28,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          tags: darmiel/todoist-project-allocation:latest
+          tags: darmiel/tpa:latest
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
