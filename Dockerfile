@@ -1,6 +1,7 @@
 FROM python:3
 
 LABEL maintainer="darmiel <hi@d2a.io>"
+LABEL org.opencontainers.image.source="https://github.com/darmiel/todoist-project-allocation"
 
 WORKDIR /usr/src/app
 
